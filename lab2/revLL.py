@@ -1,0 +1,112 @@
+class LinkedList:
+    """Defines a Singly Linked List.
+
+    attributes: head
+    """
+    
+    def __init__(self):
+        """Create a new list with a Sentinel Node"""
+        self.head = ListNode()
+
+
+    def insert(self, val, pos):
+        """Insert element val in the position after pos"""
+        tmp = ListNode(val, pos.next)
+        pos.next = tmp
+
+
+    def delete(self, pos):
+        """Delete the node following node pos in the linked list."""
+        pos.next = pos.next.next
+
+
+    def __str__(self):
+        """ Print all the elements of a list in a row."""
+        tmp = self.head
+        string = ""
+        while tmp.next:
+            string += str(tmp.next.val) + ", "
+            tmp = tmp.next
+        return string[:-2]
+
+
+    def insertAtIndex(self, val, i):
+        """Insert value val at list position i. (The position of the first element is taken to be 0.)"""
+        tmp = self.head
+        index = 0
+        while tmp:
+            if index == i:
+                self.insert(val, tmp)
+                break
+            else:
+                index += 1
+                tmp = tmp.next
+        else:
+            print("Index out of range")
+
+
+    def search(self, val):
+        """Search for value val in the list. Return a reference to the first node with value val; return None if no such node is found."""
+        tmp = self.head
+        while tmp.next:
+            if tmp.next.val == val:
+                return tmp.next
+            else:
+                tmp = tmp.next
+        return None
+            
+
+    def len(self):
+        """Return the length (the number of elements) in the Linked List."""
+        tmp = self.head
+        count = 0
+        while tmp.next:
+            count += 1
+            tmp = tmp.next
+        return count
+
+
+    def isEmpty(self):
+        """Return True if the Linked List has no elements, False otherwise."""
+        if self.head.next:
+            return False
+        else:
+            return True
+
+
+    def reverse(self):
+        if self.isEmpty():
+            return "List is Empty"
+        tmp2 = self.head
+        tmp3 = ListNode(tmp2.next.val)
+        tmp2 = tmp2.next
+        while tmp2.next:
+            tmp = ListNode(tmp2.next.val, tmp3)
+            tmp3 = tmp
+            tmp2 = tmp2.next
+
+        l = LinkedList()
+        l.head.next = tmp
+        return l
+
+
+class ListNode:
+    """Represents a node of a Singly Linked List.
+
+    attributes: val, next. 
+    """
+    def __init__(self,val=None,nxt=None):
+        self.val=val
+        self.next=nxt
+
+
+L = LinkedList()
+L.insertAtIndex(3, 0)
+L.insertAtIndex(4, 1)
+L.insertAtIndex(5, 2)
+L.insertAtIndex(6, 3)
+L.insertAtIndex(7, 4)
+L.insertAtIndex(9, 3)
+L.insertAtIndex(12, 5)
+print("List: ", L)
+print("Reversed: ", L.reverse())
